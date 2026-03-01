@@ -17,9 +17,10 @@ func main() {
 	app.OnServe().BindFunc(func(e *core.ServeEvent) error {
 		// สร้าง global middleware สำหรับ handle CORS
 		e.Router.Bind(apis.CORS(apis.CORSConfig{
-			AllowOrigins: []string{"http://localhost:8080", "https://dev-pos.zkcnt.com"},
-			AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-			AllowHeaders: []string{"Content-Type", "Authorization"},
+			AllowOrigins:     []string{"http://localhost:8080", "https://dev-pos.zkcnt.com"},
+			AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+			AllowHeaders:     []string{"Content-Type", "Authorization"},
+			AllowCredentials: true,
 		}))
 
 		// สร้าง global middleware สำหรับ handle error
