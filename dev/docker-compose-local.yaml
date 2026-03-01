@@ -1,13 +1,14 @@
 services:
   pocketbase:
-    container_name: pocketbase-dev
+    container_name: pocketbase-local
     restart: unless-stopped
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.local
     ports:
       - 3000:8080
     volumes:
+      - .:/app
       - ./pb_migrations:/pb/pb_migrations
       - ./pb_hooks:/pb/pb_hooks
       - ./pb_data:/pb/pb_data

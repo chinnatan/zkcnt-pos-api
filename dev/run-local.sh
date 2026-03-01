@@ -1,2 +1,2 @@
-docker compose -f docker-compose-dev.yaml down --remove-orphans
-docker compose -f docker-compose-dev.yaml up --build
+docker compose -f docker-compose-local.yaml down --remove-orphans
+docker compose -f docker-compose-local.yaml up --build
