@@ -1,0 +1,22 @@
+# Stage 1: Build Go App
+FROM golang:1.25.1-alpine AS builder
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+# Compile Go app (สมมติว่าไฟล์หลักคือ main.go)
+RUN CGO_ENABLED=0 GOOS=linux go build -o main ./cmd/main.go
+
+# Stage 2: Run
+FROM alpine:latest
+RUN apk add --no-cache ca-certificates
+
+WORKDIR /pb
+COPY --from=builder /app /pb/
+
+EXPOSE 8080
+
+CMD ["./main", "serve", "--http=0.0.0.0:8080"]

@@ -1,0 +1,13 @@
+services:
+  pocketbase:
+    container_name: pocketbase-prod
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - 3000:8080
+    volumes:
+      - ./prod/pb_migrations:/pb/pb_migrations
+      - ./prod/pb_hooks:/pb/pb_hooks
+      - ./prod/pb_data:/pb/pb_data
