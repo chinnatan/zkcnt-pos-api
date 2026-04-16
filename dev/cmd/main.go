@@ -19,7 +19,7 @@ func main() {
 		e.Router.Bind(apis.CORS(apis.CORSConfig{
 			AllowOrigins:     []string{"http://localhost:8080", "https://dev-pos.zkcnt.com"},
 			AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-			AllowHeaders:     []string{"Content-Type", "Authorization"},
+			AllowHeaders:     []string{"Origin", "Accept", "Content-Type", "Authorization", "Content-Length", "Content-Disposition"},
 			AllowCredentials: true,
 		}))
 
@@ -39,9 +39,6 @@ func main() {
 					return e.JSON(http.StatusBadRequest, map[string]string{"message": apiErr.Message})
 				case http.StatusInternalServerError:
 					app.Logger().Error(apiErr.Message, "error", apiErr.Data)
-					if _, ok := apiErr.Data["email"]; ok {
-						return e.JSON(http.StatusBadRequest, map[string]string{"message": "ไม่สามารถสร้างบัญชีได้ เนื่องจากมี email นี้อยู่ในระบบแล้ว"})
-					}
 					return apiErr
 				}
 			}
